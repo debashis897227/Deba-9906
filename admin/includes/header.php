@@ -1,9 +1,9 @@
 <?php
-// if( $_SESSION['user_role'] != "Admin" || !isset($_SESSION['user_id'])){
-//     echo '<script>alert("Unauthorized Access");
-//     window.location.href="../index.php";
-//     </script>';
-// }
+if( $_SESSION['user_role'] != "Admin" || !isset($_SESSION['user_id'])){
+    echo '<script>alert("Unauthorized Access");
+    window.location.href="../index.php";
+    </script>';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
