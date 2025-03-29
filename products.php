@@ -18,23 +18,36 @@
             $result = mysqli_query($conn, $query);
             ?>
 
-            <?php while ($row = mysqli_fetch_assoc($result)) : ?>
+            <?php while ($row = mysqli_fetch_assoc($result)) :
+                echo '<input type="hidden" id="product_id'.$row['id'].'" name="product_id" value="' . $row['id'] . '">';
+                echo '<input type="hidden" id="product_name'.$row['id'].'" name="product_name" value="' . $row['name'] . '">';
+                echo '<input type="hidden" id="brand'.$row['id'].'" name="brand" value="' . $row['brand'] . '">';
+                echo '<input type="hidden" id="type'.$row['id'].'" name="type" value="' . $row['type'] . '">';
+                echo '<input type="hidden" id="stock_available'.$row['id'].'" name="stock_available" value="' . $row['stock_available'] . '">';
+                echo '<input type="hidden" id="original_price'.$row['id'].'" name="original_price" value="' . $row['original_price'] . '">';
+                echo '<input type="hidden" id="selling_price'.$row['id'].'" name="selling_price" value="' . $row['selling_price'] . '">';
+            ?>
                 <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
                     <div class="team-member d-flex align-items-start">
-                        <div class="pic"><img src="assets\img\product\medicien-1.webp" class="img-fluid" alt=""></div>
+                        <div class="pic" style="border-radius:0px;"><img src="assets\img\product\medicien-1.webp" class="img-fluid" alt=""></div>
                         <div class="member-info">
                             <h4><?= $row['name']; ?> </h4>
                             <span><?= $row['brand']; ?></span>
                             <p><?= $row['selling_price']; ?></p>
 
-                            <a href=""><i class="bi bi-bag-plus-fill"></i></a>
+
+
+                            <input type="hidden" name=""><input type="hidden" name=""><input type="hidden" name=""><input type="hidden" name=""><input type="hidden" name=""><input type="hidden" name=""><input type="hidden" name="">
+                            <div class="d-flex gap-4">
+                                <span  id="addToCartBtn" onclick="addToCart(<?php echo $row['id']; ?>)"><i class="bi bi-bag-plus-fill"></i> Add to Cart</span>
+                            </div>
                         </div>
                     </div>
                 </div><!-- End Team Member -->
             <?php endwhile; ?>
 
 
-            
+
 
         </div>
 
@@ -62,3 +75,37 @@
 </section>
 
 <?php include "includes/footer.php" ?>
+<script>
+    // Example Usage
+    // addProduct(product);
+
+    function addToCart(id){
+        let product = {
+        "id": Number($("#product_id"+id).val()),
+        "name": $("#product_name"+id).val(),
+        "brand": $("#brand"+id).val(),
+        "type": $("#type"+id).val(),
+        "stock_available": $("#stock_available"+id).val(),
+        "selling_price": $("#selling_price"+id).val()
+    };
+
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+        // Check if the product already exists
+        let existingProduct = cartItems.find(p => p.id === product.id);
+
+        if (existingProduct) {
+            alert("Product already added!");
+            return;
+        }
+
+        // Add new product
+        cartItems.push(product);
+
+        // Save updated array back to localStorage
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+        console.log("Product added:", cartItems);
+    }
+
+</script>

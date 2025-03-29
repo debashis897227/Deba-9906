@@ -43,7 +43,7 @@
                     <tbody>
                         <?php
                         // Hardcoded user ID (replace with logged-in user's ID later)
-                        $user_id = 2;
+                        $user_id = $_SESSION['user_id'];
 
                         // Fetch doctor ID based on user ID
                         $query = "SELECT id FROM doctors WHERE user_id = $user_id";

@@ -1,45 +1,41 @@
 <?php
-  /**
-  * Requires the "PHP Email Form" library
-  * The "PHP Email Form" library is available only in the pro version of the template
-  * The library should be uploaded to: vendor/php-email-form/php-email-form.php
-  * For more info and help: https://bootstrapmade.com/php-email-form/
-  */
 
-  // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'contact@example.com';
+ob_start(); // Start output buffering
+include '../includes/db.php';
 
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
-  }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!isset($_SESSION['user_id'])) {
+        header('location:../auth/login.php');
+        exit();
+    }
 
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = 'Online Appointment Form';
+    $patient_id = $_SESSION['user_id'];
+    $doctor_id = isset($_POST['doctor']) ? intval($_POST['doctor']) : 0;
+    $date = isset($_POST['date']) ? $_POST['date'] : '';
+    $time = isset($_POST['time']) ? $_POST['time'] : '';
+    $visit_fee = isset($_POST['visit_fee']) ? floatval($_POST['visit_fee']) : 0.00;
 
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  */
+    $schedule = "$date $time";
+    $payment_method = isset($_POST['payment_method']) ? $_POST['payment_method'] : "UPI";
+    $payment_status = isset($_POST['payment_status']) ? $_POST['payment_status'] : "Completed";
+    $status = "Scheduled";
 
-  $contact->add_message( $_POST['name'], 'Name');
-  $contact->add_message( $_POST['email'], 'Email');
-  $contact->add_message( $_POST['phone'], 'Phone');
-  $contact->add_message( $_POST['date'], 'Appointment Date');
-  $contact->add_message( $_POST['department'], 'Department');
-  $contact->add_message( $_POST['doctor'], 'Doctor');
-  $contact->add_message( $_POST['message'], 'Message');
+    if (empty($patient_id) || empty($doctor_id) || empty($date) || empty($time)) {
+        die("All fields are required.");
+    }
 
-  echo $contact->send();
+    $sql = "INSERT INTO appointments (patient_id, doctor_id, schedule, status, payment_method, payment_status, visit_fee) 
+            VALUES ('$patient_id', '$doctor_id', '$schedule', '$status', '$payment_method', '$payment_status', '$visit_fee')";
+$hh = mysqli_query($conn, $sql);
+    if ($hh) {
+        header("Location: ../products.php");
+        exit(); // Ensure script stops execution after redirection
+    } else {
+        die("Database Error: " . mysqli_error($conn));
+    }
+
+    mysqli_close($conn);
+} else {
+    die("Invalid request.");
+}
 ?>

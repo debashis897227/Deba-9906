@@ -1,6 +1,6 @@
+<?php include "../includes/db.php" ?>
 <?php include "includes/header.php" ?>
 <?php include "includes/nav.php" ?>
-<?php include "../includes/db.php" ?>
 
 <main>
     <div class="container-fluid px-4">
@@ -29,7 +29,7 @@
                     <tbody>
                         <?php
                         // Hardcoded user ID (replace with logged-in user's ID later)
-                        $user_id = 2;
+                        $user_id = $_SESSION['user_id'];
 
                         // Fetch doctor ID based on user ID
                         $query = "SELECT id FROM doctors WHERE user_id = $user_id";

@@ -1,8 +1,8 @@
 <?php
 
-include "includes/db.php"; 
+include "includes/db.php";
 
-$login = isset($_SESSION['user_id']); 
+$login = isset($_SESSION['user_id']);
 
 ?>
 
@@ -36,6 +36,14 @@ $login = isset($_SESSION['user_id']);
 
   <!-- Main CSS File -->
   <link href="/rm/assets/css/main.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- Flatpickr JS -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 </head>
 
@@ -75,21 +83,22 @@ $login = isset($_SESSION['user_id']);
             <?php if ($login): ?>
 
               <li class="dropdown">
-              <span>Welcome, <?php echo $_SESSION['user_name']; ?></span>
-              <i class="bi bi-chevron-down toggle-dropdown"></i>
-              <ul>
-                <li><a href="profile.php">Profile</a></li>
-                <li><a href="my_orders.php">Orders</a></li>
-                <li><a href="cart_items.php">Cart</a></li>
-                <li><a href="auth/logout.php">Logout</a></li>
-              </ul>
-            </li>
-          <?php else: ?>
-            <li><a href="auth/login.php">Login</a></li>
-          <?php endif; ?>
-        </ul>
-            
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                <span>Welcome, <?php echo $_SESSION['user_name']; ?></span>
+                <i class="bi bi-chevron-down toggle-dropdown"></i>
+                <ul>
+                  <li><a href="profile.php">Profile</a></li>
+                  <li><a href="my_orders.php">Orders</a></li>
+                  <li><a href="my_appointments.php">My Appointments</a></li>
+                  <li><a href="cart_items.php">Cart</a></li>
+                  <li><a href="auth/logout.php">Logout</a></li>
+                </ul>
+              </li>
+            <?php else: ?>
+              <li><a href="auth/login.php">Login</a></li>
+            <?php endif; ?>
+          </ul>
+
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
 
         <a class="cta-btn d-none d-sm-block" href="#appointment">Make an Appointment</a>
@@ -99,5 +108,6 @@ $login = isset($_SESSION['user_id']);
     </div>
 
   </header>
-  </body>
+</body>
+
 </html>

@@ -37,7 +37,7 @@ if (mysqli_num_rows($result) > 0) {
         <table class="table table-bordered">
             <tr>
                 <th>Name</th>
-                <td><?php echo ($user['name']); ?></td>
+                <td><?php echo ($user ['name']); ?></td>
             </tr>
             <tr>
                 <th>Email</th>

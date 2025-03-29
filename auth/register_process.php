@@ -34,26 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: register.php"); // Redirect to register page
         exit();
     }
-    if (mysqli_query($conn, $query)) {
-        // Generate a 6-digit OTP
-        $otp = rand(1000, 9999);
 
-        // Save OTP in session
-        $_SESSION['otp'] = $otp;
-        $_SESSION['otp_email'] = $email;
-
-        // Send OTP to the user's email using the send_email() function
-        $subject = "Your OTP for Registration";
-        $body = "Your OTP is: $otp";
-
-        if (send_email($email, $subject, $body)) {
-            echo "<script>alert('OTP sent to your email.'); window.location.href = 'verify_otp_register.php';</script>";
-        } else {
-            echo "<script>alert('Failed to send OTP. Please try again.'); window.location.href = 'register.php';</script>";
-        }
-    } else {
-        echo "<script>alert('Error: " . mysqli_error($conn) . "'); window.location.href = 'register.php';</script>";
-    }
 
 
     // Insert into users table
@@ -86,6 +67,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $query = "INSERT INTO doctors (user_id, qualification, availability, visit_fee)
                       VALUES ($user_id, '$qualification', '$availability', $visit_fee)";
+        }
+        if (mysqli_query($conn, $query)) {
+            // Generate a 6-digit OTP
+            $otp = rand(1000, 9999);
+
+            // Save OTP in session
+            $_SESSION['otp'] = $otp;
+            $_SESSION['otp_email'] = $email;
+
+            // Send OTP to the user's email using the send_email() function
+            $subject = "Your OTP for Registration";
+            $body = "Your OTP is: $otp";
+
+            if (send_email($email, $subject, $body)) {
+                echo "<script>alert('OTP sent to your email.'); window.location.href = 'verify_otp_register.php';</script>";
+            } else {
+                echo "<script>alert('Failed to send OTP. Please try again.'); window.location.href = 'register.php';</script>";
+            }
+        } else {
+            echo "<script>alert('Error: " . mysqli_error($conn) . "'); window.location.href = 'register.php';</script>";
         }
     } else {
         echo "<script>alert('Error: " . mysqli_error($conn) . "'); window.location.href = 'register.php';</script>";

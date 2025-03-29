@@ -1,6 +1,6 @@
+<?php include "../includes/db.php" ?>
 <?php include "includes/header.php" ?>
 <?php include "includes/nav.php" ?>
-<?php include "../includes/db.php" ?>
 
 <main>
     <div class="container-fluid px-4">

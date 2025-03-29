@@ -60,8 +60,20 @@
                             <label for="qualification" class="form-label">Qualification*</label>
                             <input type="text" class="form-control" id="qualification" name="qualification">
                         </div>
+
+                        <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="opening_time" class="form-label">Opening Time*</label>
+                            <input type="time" class="form-control" id="opening_time" name="opening_time">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="closing_time" class="form-label">Closing Time*</label>
+                            <input type="time" class="form-control" id="closing_time" name="closing_time">
+                        </div>
+                        </div>
                         <div class="mb-3">
-                            <label for="day" class="form-label">Day*</label>
+                            <label for="day" class="form-label">Unavailable Day*</label>
                             <select class="form-control" id="day" multiple name="day[]">
                                 <option value="1">Sunday</option>
                                 <option value="2">Monday</option>
@@ -73,15 +85,7 @@
                             </select>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="opening_time" class="form-label">Opening Time*</label>
-                            <input type="time" class="form-control" id="opening_time" name="opening_time">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="closing_time" class="form-label">Closing Time*</label>
-                            <input type="time" class="form-control" id="closing_time" name="closing_time">
-                        </div>
+                        
 
                         <div class="mb-3">
                             <label for="visit_fee" class="form-label">Visit Fee*</label>
